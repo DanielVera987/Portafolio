@@ -9,5 +9,6 @@ const router = express.Router()
 router.get('/home', ProjectController.home)
 router.get('/test', ProjectController.test)
 router.get('/save', ProjectController.saveProject)
+router.get('/projects', ProjectController.getProjects)
 
 module.exports = router
