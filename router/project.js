@@ -6,9 +6,9 @@ const ProjectController = require('../controllers/project')
 
 const router = express.Router()
 
-router.get('/home', ProjectController.home)
-router.get('/test', ProjectController.test)
-router.get('/save', ProjectController.saveProject)
+router.post('/projects', ProjectController.saveProject)
 router.get('/projects', ProjectController.getProjects)
+router.get('/projects/:id', ProjectController.getProject)
+router.put('/projects/:id', ProjectController.update)
 
 module.exports = router

@@ -3,29 +3,21 @@
 const Project = require('../model/Project')
 const controller = {
 
-  home: (req, res) => {
-    return res.status(200).send({
-      message: "soy la home"
-    })
-  },
-  
-  test: (req, res) => {
-    return res.status(200).send({
-      message: "soy la test"
-    })
-  },
-
   saveProject: (req, res) => {
     Project.create(req.body)
            .then(x => res.status(201).send(x))
   },
 
+  getProject: (req, res) => {
+    Project.findById(req.params.id).then(x => res.status(200).send(x))
+  },
+
   getProjects: (req, res) => {
-    const projects = Project
-                     .find()
-                     .exec()
-                     .then(x => res.status(200).send(x))
-           
+    Project.find().exec().then(x => res.status(200).send(x))
+  },
+
+  update: (req, res) => {
+    Project.findOneAndUpdate(req.params.id, req.body).then(x => res.status(204).send(x))
   }
   
 }
