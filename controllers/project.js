@@ -22,16 +22,22 @@ const controller = {
 
   delete: (req, res) => {
     Project.findOneAndDelete(req.params.id).then(x => res.sendStatus(204))
+  },
+
+  uploadImage: (req, res) => {
+    let projectId = req.params.id;
+    let fileName = 'Imagen no subida...'
+
+    if (req.files) {
+      fileName = req.files.file.name
+
+      Project.findOneAndUpdate(projectId, {image: fileName})
+             .then(doc => res.status(200).send(doc))
+             .catch(err => res.status(400).send(err))
+    }else{
+      res.send(fileName)
+    }
   }
-  
- /*  {
-    "name": "DavaDev",
-    "description": "App web",
-    "category": "App Web",
-    "year": 2020,
-    "langs": "Nodejs",
-    "imagen": null
-  } */
 }
 
 module.exports = controller
