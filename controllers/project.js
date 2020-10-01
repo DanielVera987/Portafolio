@@ -18,8 +18,20 @@ const controller = {
 
   update: (req, res) => {
     Project.findOneAndUpdate(req.params.id, req.body).then(x => res.status(204).send(x))
+  },
+
+  delete: (req, res) => {
+    Project.findOneAndDelete(req.params.id).then(x => res.sendStatus(204))
   }
   
+ /*  {
+    "name": "DavaDev",
+    "description": "App web",
+    "category": "App Web",
+    "year": 2020,
+    "langs": "Nodejs",
+    "imagen": null
+  } */
 }
 
 module.exports = controller
