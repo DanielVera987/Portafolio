@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const app = express()
 
 // Cargar nuestras rutas
+const userRouter = require('./routers/user')
 
 // Midlewares
 app.use(bodyParser.urlencoded({extended: false}))
@@ -14,7 +15,8 @@ app.use(bodyParser.json())
 
 // CORS
 
-// Ejecutras Rutas
+// Ejecutars Rutas
+app.use('/api',userRouter)
 
 // Exportar modulo
 module.exports = app
