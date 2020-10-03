@@ -1,6 +1,7 @@
 'use strict'
 const validator = require('validator')
 const bcrypt = require('bcrypt-nodejs')
+const jwt = require('../services/jwt')
 const UserModel = require('../Models/User')
 
 const userController = {
@@ -66,7 +67,56 @@ const userController = {
           }
         })
       }
+  },
+
+  login: (req, res) => {
+    //Recoger los datos usuario
+    const params = req.body
+
+    // validar los datos 
+    const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
+    const password = !validator.isEmpty(params.password)
+
+    if(!email && !password){
+      res.status(201).send({
+        message: "Error al ingresar los datos"
+      })
     }
+
+    // buscar usuarios que conincidan con el email
+    UserModel.findOne({email: params.email}, (err, user) => {
+      if(err) res.status(201).send({message: "Error al ingresar los datos"})
+
+      if(!user) res.status(400).send({message: "No existe una cuenta con ese email"})
+
+      // comprobar las contraseñas (conscidencisa de email y password)
+      bcrypt.compare(params.password, user.password, (err, check) => {
+        if(err) res.status(201).send({message: "La contraseña no es correcta"})
+
+        if(check){
+          
+          // generar token con jwt y devolverlo
+          if (params.getToken) {
+            return res.status(200).send({
+              token: jwt.createToken(user)
+            })
+          } else {
+            // liimpiar la password al devolve el usuario 
+            user.password = undefined
+                
+            // devolver los datos           
+            return res.status(200).send({
+              status: "success",
+              user
+            })
+          }
+          
+        }
+
+      })
+    })
+
+  }
 }
 
 module.exports = userController
