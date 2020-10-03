@@ -11,7 +11,7 @@ const userController = {
     const params = req.body
 
     //Validar los datos
-    const nombre = !validator.isEmpty(params.nombre)
+    const nombre = !validator.isEmpty(params.name)
     const apellido = !validator.isEmpty(params.apellido)
     const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
     const password = !validator.isEmpty(params.password)
@@ -85,9 +85,9 @@ const userController = {
 
     // buscar usuarios que conincidan con el email
     UserModel.findOne({email: params.email}, (err, user) => {
-      if(err) res.status(201).send({message: "Error al ingresar los datos"})
+      if(err) return res.status(201).send({message: "Error al ingresar los datos"})
 
-      if(!user) res.status(400).send({message: "No existe una cuenta con ese email"})
+      if(!user) return res.status(400).send({message: "No existe una cuenta con ese email"})
 
       // comprobar las contraseñas (conscidencisa de email y password)
       bcrypt.compare(params.password, user.password, (err, check) => {
@@ -116,6 +116,13 @@ const userController = {
       })
     })
 
+  },
+
+  update: (req, res) => {
+
+
+    
+    return res.status(201).send({message: "Las credenciales no son correctas"})
   }
 }
 
