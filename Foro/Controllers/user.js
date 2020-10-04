@@ -10,11 +10,15 @@ const userController = {
     //Recoger los parametros de la operacion
     const params = req.body
 
-    //Validar los datos
-    const nombre = !validator.isEmpty(params.name)
-    const apellido = !validator.isEmpty(params.apellido)
-    const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
-    const password = !validator.isEmpty(params.password)
+    try{
+      //Validar los datos
+      const nombre = !validator.isEmpty(params.name)
+      const apellido = !validator.isEmpty(params.apellido)
+      const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
+      const password = !validator.isEmpty(params.password)
+    } catch (error) {
+      return res.status(400).send({message: "Faltan datos por enviar"})
+    }
 
     if(nombre && apellido && email && password)
     {
@@ -73,9 +77,13 @@ const userController = {
     //Recoger los datos usuario
     const params = req.body
 
-    // validar los datos 
-    const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
-    const password = !validator.isEmpty(params.password)
+    try{
+      // validar los datos 
+      const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
+      const password = !validator.isEmpty(params.password)
+    } catch (error) {
+      return res.status(400).send({message: "Faltan datos por enviar"})
+    }
 
     if(!email && !password){
       res.status(201).send({
@@ -119,10 +127,42 @@ const userController = {
   },
 
   update: (req, res) => {
+    //Recoger los datos
+    const params = req.body
 
+    //Validar los datos
+    try {
+      const nombre = !validator.isEmpty(params.name)
+      const apellido = !validator.isEmpty(params.apellido)
+      const email = validator.isEmail(params.email) && !validator.isEmpty(params.email)
+      const password = !validator.isEmpty(params.password)
 
-    
-    return res.status(201).send({message: "Las credenciales no son correctas"})
+      if(!nombre && !apellido && !email && !password){
+       return res.status(400).send({message: "Faltan datos por enviar"})
+      }
+    } catch (error) {
+      return res.status(400).send({message: "Faltan datos por enviar"})
+    }
+
+    const userId = req.user.sub
+
+    console.log(req.user)
+
+    // Eliminar propiedades incesarias
+    delete params.password
+
+    // Buscar y actualizar el usuario
+    UserModel.findOneAndUpdate(userId, params, (err, user) => {
+
+      if(err || !user) return res.status(500).send({message: "Error al acutalizar el usuario"})
+
+      user.password = undefined
+
+      return res.status(200).send({
+        status: "success",
+        user: user
+      })
+    })
   }
 }
 

@@ -3,6 +3,7 @@
 const jwt = require('jwt-simple')
 const moment = require('moment')
 const clave = 'clave-secreta-para-generar-el-token'
+let payload
 
 exports.authenticated = (req, res, next) => {
 
@@ -16,7 +17,7 @@ exports.authenticated = (req, res, next) => {
 
   try {
     // decodificar token
-    const payload = jwt.decode(token, clave)
+    payload = jwt.decode(token, clave)
 
     //comprobar si token se a expirado
     if(payload.exp <= moment().unix()){
@@ -30,13 +31,9 @@ exports.authenticated = (req, res, next) => {
       message: "El token no es valido"
     })
   }
-  // decodificar el token 
-
-  // comprobar si el token a caducado
 
   // adjuntar usuario en el req el
-
-  // pasar a la accion
+  req.user = payload
 
   next()
 }
