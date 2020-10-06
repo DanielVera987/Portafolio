@@ -2,6 +2,8 @@
 const validator = require('validator')
 const bcrypt = require('bcrypt-nodejs')
 const jwt = require('../services/jwt')
+const fs = require('fs')
+const path = require('path')
 const UserModel = require('../Models/User')
 
 const userController = {
@@ -161,6 +163,48 @@ const userController = {
       return res.status(200).send({
         status: "success",
         user: user
+      })
+    })
+  },
+
+  uploadAvatar: (req, res) => {
+
+    //configurar el modulo multyparty (md router.js)
+
+    //Recoger el fichero
+    let fileName = 'Avatar no subido'
+
+    if(!req.files) return res.status(404).send({message: fileName})
+
+    //conseguir el nombre  y la extencion
+    fileName = req.files.file0.name
+    const path = req.files.file0.path
+    const ext = req.files.file0.type
+
+    if (ext != 'image/jpeg' && ext != 'image/jpg' && ext != 'image/png' ){
+      fs.unlink(path, (err) => {
+        return res.status(401).send({
+          status: "error",
+          user: 'La extencion no es valida'
+        })
+      })
+    }
+
+    //sacar el id de usuario iiindetificado
+    const userId = res.user.sub 
+
+    UserModel.findOneAndUpdate(userId, {image: fileName}, {new: true}, (err, userUpdate) => {
+
+      if(err){
+        return res.status(500).send({
+          status: "error",
+          user: 'Error al subir imagen'
+        })
+      }
+
+      return res.status(401).send({
+        status: "success",
+        user: userUpdate
       })
     })
   }
