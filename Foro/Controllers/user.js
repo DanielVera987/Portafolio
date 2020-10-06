@@ -177,12 +177,14 @@ const userController = {
     if(!req.files) return res.status(404).send({message: fileName})
 
     //conseguir el nombre  y la extencion
-    fileName = req.files.file0.name
-    const path = req.files.file0.path
+    const filePath = req.files.file0.path
+    const fileSplit = filePath.split('\\')
+
+    fileName = fileSplit[2]
     const ext = req.files.file0.type
 
     if (ext != 'image/jpeg' && ext != 'image/jpg' && ext != 'image/png' ){
-      fs.unlink(path, (err) => {
+      fs.unlink(filePath, (err) => {
         return res.status(401).send({
           status: "error",
           user: 'La extencion no es valida'
@@ -191,7 +193,7 @@ const userController = {
     }
 
     //sacar el id de usuario iiindetificado
-    const userId = res.user.sub 
+    const userId = req.user.sub 
 
     UserModel.findOneAndUpdate(userId, {image: fileName}, {new: true}, (err, userUpdate) => {
 
@@ -207,7 +209,48 @@ const userController = {
         user: userUpdate
       })
     })
-  }
+  },
+
+  getAvatar: (req, res) => {
+    const fileName = req.params.fileName 
+    const pathFile = `./uploads/user/${fileName}`
+
+    fs.exists(pathFile,(exist) => {
+      if(exist) {
+        return res.status(200).send(path.resolve(pathFile))
+      }else{
+        return res.status(404).send({message: 'El archivo no exste'})
+      }
+    })
+  },
+
+  getUsers: (req, res) => {
+    UserModel.find((err, users) => {
+
+      if(err) return res.status(404).send({message: 'Error al obtener los usuarios'})
+
+      if(users){
+        return res.status(200).send({
+          status: 200,
+          message: users
+        })
+      }
+    })
+  },
+
+  getUser: (req, res) => {
+    const userId = req.params.id
+
+    UserModel.findById(userId, (err, user) => {
+      if(err) return res.status(500).send({message: 'Error al obtener el usuario'})
+      if(!user) return res.status(404).send({message: 'El usuario no existe'})
+
+      return res.status(200).send({
+        status: 200,
+        message: user
+      })
+    })
+  },
 }
 
 module.exports = userController
