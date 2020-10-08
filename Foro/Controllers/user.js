@@ -226,15 +226,13 @@ const userController = {
 
   getUsers: (req, res) => {
     UserModel.find((err, users) => {
+      if(err) return res.status(500).send({message: 'Error al obtener los usuarios'})
+      if(!users) return res.status(201).send({message: 'No hay usuarios'})
 
-      if(err) return res.status(404).send({message: 'Error al obtener los usuarios'})
-
-      if(users){
-        return res.status(200).send({
-          status: 200,
-          message: users
-        })
-      }
+      return res.status(200).send({
+        status: 200,
+        message: users
+      })
     })
   },
 

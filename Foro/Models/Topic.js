@@ -21,4 +21,4 @@ const TopicSchema = Schema({
   comments: [CommentsSchema]
 })
 
-module.exports = mongooose.model('Topic', TopicSchema)
+module.exports = mongoose.model('Topic', TopicSchema)
