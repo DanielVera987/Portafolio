@@ -61,7 +61,25 @@ const controllerTopic = {
       // Devolvemos respuesta 
       return res.status(200).send({message: 'Topic creado con exito'})
     })
-  }
+  },
+
+  getTopicsByUser: (req, res) => {
+    //Recoger el usuario
+    const userId = req.params.user 
+
+    // Obtener con una condicion 
+    TopicModel.find({user: userId})
+              .sort([['date', 'descending']])
+              .exec((err, topics) => {
+                if(err) return res.status(500).send({message: 'Error en la peticion'})
+                if(!topics) return res.status(404).send({message: 'No hay temas para mostrar'})
+
+                return res.status(200).send({
+                  status: 'success',
+                  topics
+                })
+              })
+  },
 }
 
 module.exports = controllerTopic

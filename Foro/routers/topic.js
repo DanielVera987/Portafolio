@@ -8,5 +8,6 @@ const router = express.Router()
 
 router.post('/topic', authenticated, controllerTopic.save)
 router.get('/topics/:page?', authenticated, controllerTopic.topics)
+router.get('/user-topics/:user?', controllerTopic.getTopicsByUser)
 
 module.exports = router
