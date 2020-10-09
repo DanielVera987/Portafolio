@@ -80,6 +80,65 @@ const controllerTopic = {
                 })
               })
   },
+
+  getTopic: (req, res) => {
+    const topicId = req.params.id 
+
+    TopicModel.findById(topicId)
+              .populate('user')
+              .exec((err,topic) => {
+                if(err) return res.status(500).send({message: 'Error en el servidor'})
+                if(!topic) return res.status(404).send({message: 'No existe el topic'})
+
+                return res.status(200).send({
+                  status: 'success',
+                  topic 
+                })
+              })
+  }, 
+
+  update: (req, res) => {
+    const topicId = req.params.id 
+
+    const params = req.body
+
+    try{
+      const title = !validator.isEmpty(params.title)
+      const content = !validator.isEmpty(params.content)
+      const code = !validator.isEmpty(params.code)
+      const lang = !validator.isEmpty(params.lang)
+
+      if(!title && !content && !code && !lang) return res.status(201).send({message: 'Algunos campos estan vacios'})
+    }catch(err){
+      return res.status(201).send({message: 'Faltan datos'})
+    }
+
+    const update = {
+      title: params.title,
+      content: params.content,
+      code: params.code,
+      lang: params.lang,
+    }
+
+    TopicModel.findByIdAndUpdate({_id: topicId, user: req.user.sub}, update, {new: true} ,(err,topic) => {
+      if(err) return res.status(500).send({message: 'Error'})
+
+      if(!topic) return res.status(404).send({message: 'El topic no fue actualizado'})
+
+      return res.status(200).send({message: 'El topic fue actualizado exitosamente'})
+    })
+  },
+
+  delete: (req, res) => {
+    const topicId = req.params.id
+
+    TopicModel.findByIdAndDelete({_id: topicId, user: req.user.userId}, (err, topicDelete) => {
+      if(err) return res.status(500).send({message: 'Error al borrar topic'})
+      if(!topicDelete) return res.status(404).send({message: 'Topic no existe'})
+
+      return res.status(200).send({message: 'Topic borrado exitosamente'})
+    })
+  },
 }
 
 module.exports = controllerTopic
