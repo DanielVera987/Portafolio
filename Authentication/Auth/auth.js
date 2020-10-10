@@ -1,4 +1,5 @@
 'use strict'
+const UserModel = require('../Models/User')
 
 const controllerAuth = {
 
