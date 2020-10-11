@@ -24,7 +24,7 @@ const controllerAuth = {
         .then(user => {
           if(user) return res.status(201).send({ status: 'success 🚀', message: 'Este usuario ya existe'})
           
-          UserModel.create({
+          UserModel.create({ 
             name,
             email,
             password: encryptedPassword,
