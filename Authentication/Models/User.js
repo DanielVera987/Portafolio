@@ -10,12 +10,12 @@ const UserSchema = new Schema({
 })
 
 // No mostrar la contraseña en y salt
-/* UserSchema.methods.toJSON = function(){
+UserSchema.methods.toJSON = function(){
   const obj = this.toObject()
   delete obj.password
   delete obj.salt
 
   return obj
-} */
+}
 
 module.exports = mongoose.model('User', UserSchema)
