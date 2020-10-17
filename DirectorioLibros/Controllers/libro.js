@@ -13,15 +13,15 @@ const ControllerLibro = {
   },
 
   create: (req, res) => {
-    const params = req.body;
+    const data = req.body;
 
-    if(params.titulo == '' || 
-       params.autor == '' ||
-       params.anio == '' ||
-       params.edicion == '' ||
-       params.paginas == '' || 
-       params.portada == '' || 
-       params.descripcion == ''){
+    if(data.titulo == '' || 
+       data.autor == '' ||
+       data.anio == '' ||
+       data.edicion == '' ||
+       data.paginas == '' || 
+       data.portada == '' || 
+       data.descripcion == ''){
       return res.status(201).send('Faltan datos');
     }
 
@@ -30,6 +30,36 @@ const ControllerLibro = {
 
   },
 
+  getById: (req, res) => {
+    const id = req.params.id;
+
+    ModelLibro
+      .findById(id)
+      .exec()
+      .then(x => res.status(200).send(x))
+      .catch(err => res.status(500).send(err))
+  },
+
+  update: (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+
+    if(data.titulo == '' || 
+       data.autor == '' ||
+       data.anio == '' ||
+       data.edicion == '' ||
+       data.paginas == '' || 
+       data.portada == '' || 
+       data.descripcion == ''){
+      return res.status(201).send('Faltan datos');
+    }
+
+    ModelLibro
+      .findOneAndUpdate(id, data)
+      .exec()
+      .then(x => res.status(200).send(x))
+
+  },
 };
 
 module.exports = ControllerLibro;
