@@ -60,6 +60,15 @@ const ControllerLibro = {
       .then(x => res.status(200).send(x))
 
   },
+
+  delete: (req, res) => {
+    const id = req.params.id;
+
+    ModelLibro
+      .findOneAndDelete(id)
+      .exec()
+      .
+  }
 };
 
 module.exports = ControllerLibro;
