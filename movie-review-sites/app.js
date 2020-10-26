@@ -3,10 +3,9 @@
 const express = require('express');
 const favicon = require('serve-favicon');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 const routers = require('./routers/router');
 const publicDir = express.static(`${__dirname}/public`);
-const viewDir = `${__dirname}/views`;
+const viewDir = `${__dirname}/views/`;
 const bodyParser = require('body-parser');
 const port = (process.env.PORT || 3000);
 const app = express();
@@ -19,5 +18,5 @@ app
   .use(morgan('dev'))
   .use(publicDir)
   .use('/', routers)
-
+ 
 module.exports = app;
