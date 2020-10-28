@@ -57,8 +57,46 @@ const userController = {
 
   },
 
+  viewLogin: (req, res) => {
+    const locals = {
+      title: "Login",
+      action: "/login",
+      message: ""
+    }
+
+    return res.render('login', locals);
+  },
+
   login: (req, res) => {
-    res.send('Hello world');
+    let email = validator.isEmail(req.body.email);
+    let password = !validator.isEmpty(req.body.password);
+
+    if(!email || !password) return res.render('error');
+
+    email = req.body.email;
+    password = req.body.password;
+
+    UserModel.findOne({email: email}, (err, user) => {
+      if(!user) return render('login', {
+        title: "Login",
+        action: "/login",
+        message: 'El Usuario no existe'
+      })
+
+      crypto.pbkdf2(password, user.salt, 1000, 64, 'sha1', (err, key) => {
+        const encryptedPassword = key.toString('base64');
+
+        if (encryptedPassword === user.password) {
+          console.log('user login');
+        }
+
+        return res.render('login', {
+          title: "Login",
+          action: "/login",
+          message: 'Usuario o Contraseña incorrecta'
+        });
+      });
+    });
   },
 
   me: (req, res) => {

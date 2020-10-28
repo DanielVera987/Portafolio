@@ -8,6 +8,7 @@ router
   .get('/register', userController.viewRegister)
   .post('/register', userController.register)
   
+  .get('/login', userController.viewLogin)
   .post('/login', userController.login)
 
 
