@@ -16,6 +16,8 @@ app
   .set('port', port)
 
   .use(morgan('dev'))
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.json())
   .use(publicDir)
   .use('/', routers)
  
