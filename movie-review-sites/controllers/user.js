@@ -76,31 +76,32 @@ const userController = {
     email = req.body.email;
     password = req.body.password;
 
-    UserModel.findOne({email: email}, (err, user) => {
-      if(!user) return render('login', {
-        title: "Login",
-        action: "/login",
-        message: 'El Usuario no existe'
-      })
-
-      crypto.pbkdf2(password, user.salt, 1000, 64, 'sha1', (err, key) => {
-        const encryptedPassword = key.toString('base64');
-
-        if (encryptedPassword === user.password) {
-          console.log('user login');
-        }
-
-        return res.render('login', {
+    UserModel.findOne({email: email}).exec()
+      .then(user => {
+        if(!user) return render('login', {
           title: "Login",
           action: "/login",
-          message: 'Usuario o Contraseña incorrecta'
+          message: 'El Usuario no existe'
+        })
+
+        crypto.pbkdf2(password, user.salt, 1000, 64, 'sha1', (err, key) => {
+          const encryptedPassword = key.toString('base64');
+
+          if (encryptedPassword === user.password) {
+            console.log('user login');
+          }
+
+          return res.render('login', {
+            title: "Login",
+            action: "/login",
+            message: 'Usuario o Contraseña incorrecta'
+          });
         });
       });
-    });
   },
 
   me: (req, res) => {
-
+    
   },
 }
 
