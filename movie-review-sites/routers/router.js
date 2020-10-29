@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user');
+const movieController = require('../controllers/movie');
 
 router
-  .get('/', (req, res) => res.render('index'))
+  .get('/', movieController.index)
+  .get('/movie', movieController.viewAdd)
+  .post('/movie', movieController.add)
 
   .get('/register', userController.viewRegister)
   .post('/register', userController.register)
