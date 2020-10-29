@@ -14,9 +14,9 @@ const movieController = {
       .catch(err => console.log(err));
   }, 
 
-  getById: (req, res) => {
+  getById: (req, res) => {  
 
-  },
+  }, 
 
   viewAdd: (req, res) => {
     return res.render('movieadd', { message: 'New Movie'});
