@@ -14,6 +14,10 @@ const movieController = {
       .catch(err => console.log(err));
   }, 
 
+  getById: (req, res) => {
+
+  },
+
   viewAdd: (req, res) => {
     return res.render('movieadd', { message: 'New Movie'});
   }, 
@@ -44,6 +48,18 @@ const movieController = {
       });
     })
     .catch(err => res.render('movieadd', { message: 'Complete los datos'}))
+  },
+
+  viewUpdate: (req, res) => {
+
+  },
+
+  update: (req, res) => {
+
+  },
+
+  delete: (req, res) => {
+    
   }
 }
 
