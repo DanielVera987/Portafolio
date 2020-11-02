@@ -7,6 +7,8 @@ router
   .get('/', movieController.index)
   .get('/movie', movieController.viewAdd)
   .post('/movie', movieController.add)
+  .get('/update/:id', movieController.viewUpdate)
+  .post('/update/:id', movieController.update)
 
   .get('/register', userController.viewRegister)
   .post('/register', userController.register)

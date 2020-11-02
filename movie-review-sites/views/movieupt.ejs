@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Movie Add</title>
+  </head>
+  <body>
+    <%=message%>
+    <form action="/update/<%=id%>" method="POST">
+      <label for="title">Title</label>
+      <input id="title" name="title" value="<%=title%>"/>
+
+      <label for="author">Author</label>
+      <input id="author" name="author" value="<%=author%>"/>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description"><%=description%></textarea>
+
+      <label for="year">Year</label>
+      <input id="year" name="year" value="<%=year%>"/>
+
+      <label for="image">Image</label>
+      <input id="image" name="image" value="<%=image%>"/>
+
+      <input type="submit" value="Enviar"/>
+    </form>
+  </body>
+</html>

@@ -15,7 +15,14 @@ const movieController = {
   }, 
 
   getById: (req, res) => {  
-
+    let id = req.params.id;
+    ModelMovie.findById(id).exec()
+      .then(movie => {
+        return res.render('movieadd', {
+          movie
+        });
+      })
+      .catch(err => console.log(err))
   }, 
 
   viewAdd: (req, res) => {
@@ -51,11 +58,39 @@ const movieController = {
   },
 
   viewUpdate: (req, res) => {
+    const id = req.params.id;
 
+    ModelMovie.findById(id).exec()
+      .then(movie => {
+        return res.render('movieupt', {
+          message: "Actualizar Pelicula",
+          id,
+          title: movie.title,
+          author: movie.author,
+          description: movie.description,
+          year: movie.year,
+          image: movie.image
+        });
+      })
+      .catch(err => res.render('error', { message: "La pelicula no existe" }))
   },
 
   update: (req, res) => {
+    const id = req.params.id;
 
+    ModelMovie.findByIdAndUpdate(id)
+      .then(movie => {
+        return res.render('movieupt', {
+          message: "Pelicula Actualizada",
+          id,
+          title: movie.title,
+          author: movie.author,
+          description: movie.description,
+          year: movie.year,
+          image: movie.image
+        });
+      })  
+      .catch(err => res.render('error', { message: 'Error al actualizar la pelicula'}))
   },
 
   delete: (req, res) => {
