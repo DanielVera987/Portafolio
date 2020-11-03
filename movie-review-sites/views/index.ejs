@@ -24,21 +24,22 @@
 
       <section>
 
+      <% movies.forEach((movie) => { %>
         <article> 
           <header>
-            <h2>Nombre de pelicula</h2>
+            <h2><%=movie.title%></h2>
           </header>
           <figure>
-            <img src="" alt="mrs" width="100">
+            <img src="<%=movie.image%>" alt="" width="100">
             <figcaption>
-              Hello
+              <%=movie.description%>
             </figcaption>
           </figure>
           <footer>
             
           </footer>
         </article>
-
+      <% }); %>
       </section>
 
       <aside>

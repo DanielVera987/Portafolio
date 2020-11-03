@@ -76,9 +76,21 @@ const movieController = {
   },
 
   update: (req, res) => {
+    let title = (validator.isEmpty(req.body.title)) ? false : req.body.title;
+    let author = (validator.isEmpty(req.body.author)) ? false : req.body.author;
+    let description = (validator.isEmpty(req.body.description)) ? false : req.body.description;
+    let year = (validator.isEmpty(req.body.year)) ? false : req.body.year;
+    let image = (validator.isEmpty(req.body.image)) ? false : req.body.image;
+
+    if (!title || !author || !description || !year || !image) {
+      return res.render('Error', {
+        message: 'Complete the data'
+      });
+    }
+
     const id = req.params.id;
 
-    ModelMovie.findByIdAndUpdate(id)
+    ModelMovie.findByIdAndUpdate(id, req.body, {new: true})
       .then(movie => {
         return res.render('movieupt', {
           message: "Pelicula Actualizada",
@@ -94,7 +106,15 @@ const movieController = {
   },
 
   delete: (req, res) => {
-    
+    const id = req.params.id;
+
+    ModelMovie.findByIdAndDelete(id)
+      .then(movie => {
+        if (movie) {
+          console.log('borrado');
+        }
+      })
+      .catch(err => console.log(err))
   }
 }
 
