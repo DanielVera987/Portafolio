@@ -19,6 +19,7 @@ const movieController = {
     ModelMovie.findById(id).exec()
       .then(movie => {
         return res.render('movieadd', {
+          message: 'Pelicula',
           movie
         });
       })

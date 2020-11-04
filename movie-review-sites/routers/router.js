@@ -6,6 +6,7 @@ const movieController = require('../controllers/movie');
 router
   .get('/', movieController.index)
   .get('/movie', movieController.viewAdd)
+  .get('/movie/:id', movieController.getById)
   .post('/movie', movieController.add)
   .get('/update/:id', movieController.viewUpdate)
   .post('/update/:id', movieController.update)

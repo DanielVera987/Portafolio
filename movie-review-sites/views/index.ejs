@@ -1,30 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Movie Review Site</title>
-    <link rel="stylsheet" src="css/style.css">
-  </head>
-  <body>
+<%- include('header.ejs') %>
     <div class="content">
-      <header>
-
-        <nav> 
-          <a href="#">Home</a>
-          <a href="/movie">New movie</a>
-          <a href="#">Login</a>
-        </nav>
-
-        <hgroup>
-          <h1>Movie Review</h1>
-          <h3>Create with nodejs</h3>
-        </hgroup>
-
-      </header>
-
       <section>
 
       <% movies.forEach((movie) => { %>
+        <a href="movie/<%=movie.id%>">
         <article> 
           <header>
             <h2><%=movie.title%></h2>
@@ -39,16 +18,11 @@
             
           </footer>
         </article>
+        </a>
       <% }); %>
       </section>
 
-      <aside>
-        <blockquote>Categoria</blockquote>
-      </aside>
-
-      <footer>
-        &copy; Reserver all Daniel Vera
-      </footer>
+      <%- include('footer.ejs') %>
     </div>
   </body>
 </html>
