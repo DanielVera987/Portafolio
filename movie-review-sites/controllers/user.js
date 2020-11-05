@@ -61,7 +61,7 @@ const userController = {
     const locals = {
       title: "Login",
       action: "/login",
-      message: ""
+      message: "Login"
     }
 
     return res.render('login', locals);

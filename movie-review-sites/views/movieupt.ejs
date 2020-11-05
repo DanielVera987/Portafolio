@@ -1,28 +1,32 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <title>Movie Add</title>
-  </head>
-  <body>
+<%- include('header.ejs') %>
+  <div class="content">
     <%=message%>
-    <form action="/update/<%=id%>" method="POST">
-      <label for="title">Title</label>
-      <input id="title" name="title" value="<%=title%>"/>
+    <form action="/update/<%=movie.id%>" method="POST">
+      <p>
+        <label for="title">Title</label>
+        <input id="title" name="title" value="<%=movie.title%>"/>
+      </p>
 
-      <label for="author">Author</label>
-      <input id="author" name="author" value="<%=author%>"/>
+      <p>
+        <label for="author">Author</label>
+        <input id="author" name="author" value="<%=movie.author%>"/>
+      </p>
 
-      <label for="description">Description</label>
-      <textarea id="description" name="description"><%=description%></textarea>
+      <p>
+        <label for="description">Description</label>
+        <textarea id="description" name="description"><%=movie.description%></textarea>
+      </p>
 
-      <label for="year">Year</label>
-      <input id="year" name="year" value="<%=year%>"/>
+      <p>
+        <label for="year">Year</label>
+        <input id="year" name="year" value="<%=movie.year%>"/>
+      </p>
 
-      <label for="image">Image</label>
-      <input id="image" name="image" value="<%=image%>"/>
+      <p>
+        <label for="image">Image</label>
+        <input id="image" name="image" value="<%=movie.image%>"/>
+      </p>
 
-      <input type="submit" value="Enviar"/>
+      <input type="submit" class="btn" value="Enviar"/>
     </form>
-  </body>
-</html>
+  </div>

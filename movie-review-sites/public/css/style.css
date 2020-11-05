@@ -50,6 +50,51 @@ section article{
   border: 1px solid #000000;
 }
 
+form{
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+form p{
+  margin: 20px;
+}
+
+
+form p input,
+form input{
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 8px 2px;
+}
+
+.btn{
+  width: 150px;
+  font-size: 15px;
+  padding: 6px 25px;
+  margin: 10px 20px;
+  border: 0px;
+  background: #272727;
+  color: #fff;
+  border-radius: 5px;
+}
+
 footer{
+  text-align: center;
+}
+
+.login{
+  width: 15em;
+  padding: 15px;
+  margin: 20px auto;
+}
+.login input{
+  width: 100%;
+}
+
+.center{
+  margin: 0 auto;
+}
+
+.text-center{
   text-align: center;
 }

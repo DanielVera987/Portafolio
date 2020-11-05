@@ -16,10 +16,10 @@ const movieController = {
 
   getById: (req, res) => {  
     let id = req.params.id;
-    ModelMovie.findById(id).exec()
+    ModelMovie.findById(id)
       .then(movie => {
-        return res.render('movieadd', {
-          message: 'Pelicula',
+        return res.render('movieupt', {
+          message: movie.title,
           movie
         });
       })
