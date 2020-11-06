@@ -14,12 +14,13 @@ const movieController = {
       .catch(err => console.log(err));
   }, 
 
-  getById: (req, res) => {  
+  getById: (req, res) => { 
+    console.log(req.session)
+    
     let id = req.params.id;
     ModelMovie.findById(id)
       .then(movie => {
-        return res.render('movieupt', {
-          message: movie.title,
+        return res.render('viewMovie', {
           movie
         });
       })
@@ -59,6 +60,9 @@ const movieController = {
   },
 
   viewUpdate: (req, res) => {
+    if ( !req.session.user) {
+      return res.redirect('/');
+    } 
     const id = req.params.id;
 
     ModelMovie.findById(id).exec()
@@ -77,6 +81,10 @@ const movieController = {
   },
 
   update: (req, res) => {
+    if ( !req.session.user) {
+      return res.redirect('/');
+    } 
+
     let title = (validator.isEmpty(req.body.title)) ? false : req.body.title;
     let author = (validator.isEmpty(req.body.author)) ? false : req.body.author;
     let description = (validator.isEmpty(req.body.description)) ? false : req.body.description;
@@ -95,12 +103,7 @@ const movieController = {
       .then(movie => {
         return res.render('movieupt', {
           message: "Pelicula Actualizada",
-          id,
-          title: movie.title,
-          author: movie.author,
-          description: movie.description,
-          year: movie.year,
-          image: movie.image
+          movie
         });
       })  
       .catch(err => res.render('error', { message: 'Error al actualizar la pelicula'}))

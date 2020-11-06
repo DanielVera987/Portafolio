@@ -98,3 +98,12 @@ footer{
 .text-center{
   text-align: center;
 }
+
+.info-movie{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.info-movie .info{
+  margin: 0 20px;
+}

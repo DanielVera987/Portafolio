@@ -71,7 +71,9 @@ const userController = {
     let email = validator.isEmail(req.body.email);
     let password = !validator.isEmpty(req.body.password);
 
-    if(!email || !password) return res.render('error');
+    if(!email || !password) return res.render('error', {
+      message: 'Error al autenticarse'
+    });
 
     email = req.body.email;
     password = req.body.password;
