@@ -28,6 +28,8 @@ const movieController = {
   }, 
 
   viewAdd: (req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+    console.log(req.session.user);
     return res.render('movieadd', { message: 'New Movie'});
   }, 
 

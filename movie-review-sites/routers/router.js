@@ -18,6 +18,6 @@ router
   
   .get('/login', userController.viewLogin)
   .post('/login', userController.login)
-
+  .get('/exit', userController.exit)
 
 module.exports = router;

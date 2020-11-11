@@ -49,7 +49,8 @@ const userController = {
             salt: newSalt
           }, (err, user) => {
             if(err) return res.render('error');
-            console.log('success');
+            req.session.user = user;
+            return res.redirect('/');
           });
         });
       });
@@ -90,7 +91,11 @@ const userController = {
           const encryptedPassword = key.toString('base64');
 
           if (encryptedPassword === user.password) {
-            console.log('user login');
+            req.session.user = user;
+            var hour = 3600000
+            req.session.cookie.expires = new Date(Date.now() + hour)
+            req.session.cookie.maxAge = hour
+            return res.redirect('/');
           }
 
           return res.render('login', {
@@ -105,6 +110,11 @@ const userController = {
   me: (req, res) => {
     
   },
+
+  exit: (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+  }
 }
 
 module.exports = userController;

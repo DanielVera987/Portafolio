@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-  </head>
-  <body>
+<%- include('header.ejs') %>
+  <div class="content">
     <% if(message) {%>
       <%= message %>
     <% } %>
-    <form action="<%=action%>" method="POST">
-      <input type="text" name="name"/>
-      <input type="email" name="email"/>
-      <input type="password" name="password"/>
+    <form action="<%=action%>" class="login" method="POST">
+      Registrate
+      <br><br>
+      <label for="name">Nombre</label>
+      <input type="text" name="name" placeholder="Nombre"/>
+      <br><br>
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="Email"/>
+      <br><br>
+      <label for="password">Password</label>
+      <input type="password" name="password" placeholder="Password"/>
+      <br><br>
       <input type="submit" value="Enviar"/>
     </form>
-  </body>
-</html>
+  </div>
